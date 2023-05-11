@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Shared.Models;
+using System.Data;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQLITE;
@@ -7,6 +9,8 @@ namespace Plugins.DataStore.SQLITE;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly MarketDbContext _db;
+    DataTable table = new DataTable();
+
     public CategoryRepository(MarketDbContext db)
     {
         _db = db;
@@ -21,10 +25,6 @@ public class CategoryRepository : ICategoryRepository
         return null!;
     }
 
-    public async Task GetDbCategories()
-    {
-        await _db.Categories!.Include(h => h.Parent).ToListAsync();
-    }
-
+ 
 }
 
